@@ -13,9 +13,9 @@ mkdir saved_models
 ```
 
 # Hypaparameter optimization guide
-The type of optimized hyperparameter is specificed by short strings (e.g "lr"). Check [here](/a2c_ppo_acktr/epiopt.py) for the name of all supported hyperparameter types, used by different policy gradient algorithms (PPO, A2C, ACKTR). Check each algorithm file [ppo](/a2c_ppo_acktr/algo/ppo.py) or [a2c, acktr](/a2c_ppo_acktr/algo/ppo.py) for the usage of corresponding hyperparameters.
+The type of optimized hyperparameter is specificed by short strings (e.g "lr"). Check [here](/a2c_ppo_acktr/epiopt.py#L153) for the name of all supported hyperparameter types, used by different policy gradient algorithms (PPO, A2C, ACKTR). Check each algorithm file [ppo](/a2c_ppo_acktr/algo/ppo.py) or [a2c, acktr](/a2c_ppo_acktr/algo/ppo.py) for the usage of corresponding hyperparameters.
 
-Check ./a2c_ppo_acktr/arguments.py for full list of arguments. Need to set --adaptive-opt=1 and --opt-type="hyperparameter type strings" to enable EPGT. Multi-hyperparameter opt-type is supported (e.g. "lr-clip").  
+Check [here](/a2c_ppo_acktr/arguments.py) for full list of arguments. Need to set --adaptive-opt=1 and --opt-type="hyperparameter type strings" to enable EPGT. Multi-hyperparameter opt-type is supported (e.g. "lr-clip").  
 
 
 # Mujoco tasks
