@@ -6,7 +6,7 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="testing atari")
     parser.add_argument("--use_mem", default=1, type=int,
                         help="mem script or not")
-    parser.add_argument("--opt-type", default="clip-lr-mb-gae", type=str,
+    parser.add_argument("--opt-type", default="clip-lr", type=str,
                         help="mem script or not")
     parser.add_argument("--env-name", default="HalfCheetah-v2", type=str,
                         help="mem script or not")
