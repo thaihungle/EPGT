@@ -62,7 +62,6 @@ class DND:
         values = self.values.data
         values[index] = value[0].data
         self.values = Parameter(values)
-        # self.optimizer = optim.RMSprop([self.keys, self.values], lr=self.lr)
 
     def insert(self, key, value):
         """
@@ -140,9 +139,6 @@ class DND:
             lookup_key.data.cpu().numpy(), min(K, len(self.keys)))
         indexes = torch.LongTensor(lookup_indexesb).view(-1)
 
-        # print(self.kdtree.nn_index(
-        #     lookup_key.data.cpu().numpy(), min(self.num_neighbors, len(self.keys)))[0])
-        # print("----")
         old_indexes = indexes
         vshape = torch.tensor(self.values).shape
         if len(vshape)==2:
@@ -150,12 +146,9 @@ class DND:
 
         kvalues = inverse_distance(torch.tensor(distb).to(lookup_key.device))
         kvalues = kvalues/torch.sum(kvalues, dim=-1, keepdim=True)
-        #print(torch.tensor(self.values))
-        #print(indexes)
+      
         values = torch.tensor(self.values).gather(0, indexes.to(lookup_key.device))
 
-        #print(values)
-        #raise False
         if len(vshape)==2:
             values = values.reshape(lookup_key.shape[0],vshape[1], -1)
             kvalues = kvalues.unsqueeze(1)
@@ -194,38 +187,19 @@ class DND:
                 distb=[distb]
 
             for i, index in enumerate(lookup_indexes):
-               # if i == 0 and self.key_cache.get(tuple(lookup_key[0].data.cpu().numpy())) is not None:
-                    # If a key exactly equal to lookup_key is used in the DND lookup calculation
-                    # then the loss becomes non-differentiable. Just skip this case to avoid the issue.
-                #    continue
                 if update_flag:
                     self.indexes_to_be_updated.add(int(index))
                 else:
                     self.move_to_back.add(int(index))
                 curv = self.values[int(index)]
-                # kernel_val = self.kernel(self.keys[int(index)], lookup_key[b])
                 kernel_val = inverse_distance(distb[b][i])
                 kernel_sum += kernel_val
                 ks.append((index,kernel_val, curv))
-                # self.update((R - curv) * kernel_val * self.lr + curv, index)
-                # kernel_val = 1
+               
             for index, kernel_val, curv in ks:
                 if max_mode:
                     self.update(torch.max(R,curv), index)
                 else:
                     self.update((R - curv) * kernel_val / kernel_sum * self.lr + curv, index)
 
-    def update_params(self):
-        """
-        Update self.keys and self.values via backprop
-        Use self.indexes_to_be_updated to update self.key_cache accordingly and rebuild the index of self.kdtree
-        """
-        for index in self.indexes_to_be_updated:
-            del self.key_cache[tuple(self.keys[index].data.cpu().numpy())]
-        # self.optimizer.step()
-        # self.optimizer.zero_grad()
-        for index in self.indexes_to_be_updated:
-            self.key_cache[tuple(self.keys[index].data.cpu().numpy())] = 0
-        self.indexes_to_be_updated = set()
-        self.kdtree.build_index(self.keys.data.cpu().numpy())
-        self.stale_index = False
+

@@ -1,8 +1,9 @@
 # EPGT
 
-source code for Episodic Policy Gradient Training   
-arXiv version: https://arxiv.org/abs/2112.01853 
-code reference https://github.com/ikostrikov/pytorch-a2c-ppo-acktr-gail
+source code for Episodic Policy Gradient Training        
+arXiv version: https://arxiv.org/abs/2112.01853    
+AAAI version: TBU   
+code reference for PG algoritms https://github.com/ikostrikov/pytorch-a2c-ppo-acktr-gail   
 
 # Setup  
 ```
@@ -10,6 +11,12 @@ pip install -r requirements.txt
 mkdir logs
 mkdir saved_models
 ```
+
+# Hypaparameter optimization guide
+The type of optimized hyperparameter is specificed by short strings (e.g "lr"). Check ./a2c_ppo_acktr/epiopt.py for the name of all supported hyperparameter types, used by different policy gradient algorithms (PPO, A2C, ACKTR). Check each algorithm file ./a2c_ppo_acktr/algo/ppo.py, a2c_acktr.py for the usage of corresponding hyperparameters.
+
+Check ./a2c_ppo_acktr/arguments.py for full list of arguments. Need to set --adaptive-opt=1 and --opt-type="hyperparameter type strings" to enable EPGT. Multi-hyperparameter opt-type is supported (e.g. "lr-clip").  
+
 
 # Mujoco tasks
 run command examples for HalfCheetah

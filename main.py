@@ -165,12 +165,7 @@ def main():
         if 'nstep' in agent.epi_opt.opt_values:
             num_steps = max(agent.epi_opt.opt_values['nstep']*args.num_steps,1)
             num_steps =int(num_steps)
-        # rollouts = RolloutStorage(num_steps, args.num_processes,
-        #                           envs.observation_space.shape, envs.action_space,
-        #                           actor_critic.recurrent_hidden_state_size)
-        #
-        # rollouts.obs[0].copy_(obs)
-        # rollouts.to(device)
+        
         for step in range(num_steps):
             # Sample actions
             with torch.no_grad():

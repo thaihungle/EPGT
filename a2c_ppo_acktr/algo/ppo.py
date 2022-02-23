@@ -32,7 +32,6 @@ class PPO(nn.Module):
         self.max_grad_norm = max_grad_norm
         self.use_clipped_value_loss = use_clipped_value_loss
 
-        # if args.optimizer == "adam":
         self.optimizer = optim.Adam(actor_critic.parameters(), lr=lr, eps=eps)
 
         if args.optimizer == "sgd":
