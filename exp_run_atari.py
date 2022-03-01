@@ -58,6 +58,6 @@ if __name__ == "__main__":
                       f"--num-processes {args.num_processes}  --lr 2.5e-4 --entropy-coef 0.01 "
                       f"--value-loss-coef 0.5 --ppo-epoch 10 --num-mini-batch 32 "
                       f"--gamma 0.99 --gae-lambda 0.95 --num-env-steps {args.num_env_steps} "
-                      f"--use-linear-lr-decay --use-proper-time-limits --seed {i*10+10} "
+                      f"--use-linear-lr-decay --use-proper-time-limits --seed {i*10} "
                       f"--use_mem 0 --adaptive-opt 0 --context_train {args.context_train} "
                       f"--opt-type {args.opt_type} --run-id r{args.run_id}{i}")
