@@ -9,7 +9,7 @@ code reference for PG algoritms https://github.com/ikostrikov/pytorch-a2c-ppo-ac
 ```
 pip install -r requirements.txt
 mkdir logs
-mkdir saved_models
+mkdir trained_models
 ```
 Install other packages if possible
 
