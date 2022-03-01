@@ -11,6 +11,7 @@ pip install -r requirements.txt
 mkdir logs
 mkdir saved_models
 ```
+Install other packages if possible
 
 # Hypaparameter optimization guide
 The type of optimized hyperparameter is specificed by short strings (e.g "lr"). Check [here](/a2c_ppo_acktr/epiopt.py#L153) for the name of all supported hyperparameter types, used by different policy gradient algorithms (PPO, A2C, ACKTR). Check each algorithm file [ppo](/a2c_ppo_acktr/algo/ppo.py) or [a2c, acktr](/a2c_ppo_acktr/algo/ppo.py) for the usage of corresponding hyperparameters.

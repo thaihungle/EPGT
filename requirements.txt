@@ -12,4 +12,3 @@ stable_baselines3==0.10.0
 tensorboard_logger==0.1.0
 torch==1.7.1
 tqdm==4.62.3
-~umpy==1.18.5
