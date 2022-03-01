@@ -6,13 +6,13 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="testing atari")
     parser.add_argument("--use_mem", default=1, type=int,
                         help="mem script or not")
-    parser.add_argument("--opt-type", default="clip-lr", type=str,
+    parser.add_argument("--opt-type", default="lr-clip-gae-mb", type=str,
                         help="mem script or not")
     parser.add_argument("--env-name", default="HalfCheetah-v2", type=str,
                         help="mem script or not")
     parser.add_argument("--run_id", default="", type=str,
                         help="mem script or not")
-    parser.add_argument("--num_run", default=5, type=int,
+    parser.add_argument("--num_run", default=10, type=int,
                         help="no of eval")
     parser.add_argument("--num-env-steps", default=1000000, type=int,
                         help="no of eval")
@@ -44,7 +44,7 @@ if __name__ == "__main__":
                       f"--num-processes {args.num_processes}  --lr 3e-4 --entropy-coef 0 "
                       f"--value-loss-coef 0.5 --ppo-epoch 10 --num-mini-batch 32 "
                       f"--gamma 0.99 --gae-lambda 0.95 --num-env-steps {args.num_env_steps} "
-                      f"--use-linear-lr-decay  "
+                      f"--use-linear-lr-decay --seed {i*10}  "
                       f"--use_mem 1 --adaptive-opt 1 --memory_size 10000 "
                       f"--k {args.k} --k_write {args.k_write} --read_interval {args.read_interval} "
                       f"--write_interval {args.write_interval} --quan_level {args.quan_level} "
@@ -58,6 +58,6 @@ if __name__ == "__main__":
                       f"--num-processes {args.num_processes}  --lr 3e-4 --entropy-coef 0 "
                       f"--value-loss-coef 0.5 --ppo-epoch 10 --num-mini-batch 32 "
                       f"--gamma 0.99 --gae-lambda 0.95 --num-env-steps {args.num_env_steps} "
-                      f"--use-linear-lr-decay "
+                      f"--use-linear-lr-decay --seed {i*10} "
                       f"--use_mem 0 --adaptive-opt 0 --context_train {args.context_train} "
                       f"--opt-type {args.opt_type} --run-id r{args.run_id}{i}")

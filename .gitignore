@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 logs/
-saved_models/
+trained_models/

@@ -19,7 +19,6 @@ class PPO(nn.Module):
                  use_clipped_value_loss=True, args=None):
         super(PPO, self).__init__()
 
-        self.args=args
         self.actor_critic = actor_critic
 
         self.clip_param = clip_param
@@ -63,7 +62,7 @@ class PPO(nn.Module):
         # print(self.traj_buffer)
 
        
-        if self.args:
+        if self.args.use_mem:
             self.epi_opt.insert2mem(torch.mean(rollouts.returns), update_step=update_step, gstep=-1)
 
 
@@ -91,7 +90,7 @@ class PPO(nn.Module):
             for sample in data_generator:
 
 
-                if self.args:
+                if self.args.use_mem:
                     self.epi_opt.take_action(update_step, env_step, gstep)
 
                 obs_batch, recurrent_hidden_states_batch, actions_batch, \
@@ -105,7 +104,7 @@ class PPO(nn.Module):
 
                 nps = self.args.num_processes*self.args.num_steps//self.num_mini_batch
 
-                if self.args and self.args.adaptive_opt > 0 and 'np' in self.epi_opt.opt_values:
+                if self.args.adaptive_opt > 0 and 'np' in self.epi_opt.opt_values:
                     nps = nps * self.epi_opt.opt_values['np']
                     nps = max(1, int(nps))
 
@@ -134,7 +133,7 @@ class PPO(nn.Module):
                
                 action_loss = -torch.min(surr1, surr2).mean()
                   
-                if self.args and gstep > 0:
+                if self.args.use_mem and gstep > 0:
                     if action_loss < prev_loss:
                         epo_reward = 0
                     else:
@@ -164,7 +163,7 @@ class PPO(nn.Module):
                         self.epi_opt.compute_last_grad()
 
                 lrs = []
-                if self.args and self.args.adaptive_opt > 0 and 'lr' in self.epi_opt.opt_values:
+                if  self.args.adaptive_opt > 0 and 'lr' in self.epi_opt.opt_values:
                     for param_group in self.optimizer.param_groups:
                         lrs.append(param_group['lr'])
                         param_group['lr'] *= self.epi_opt.opt_values['lr']
@@ -196,7 +195,7 @@ class PPO(nn.Module):
                 action_loss_epoch += action_loss.item()
                 dist_entropy_epoch += dist_entropy.item()
 
-                if self.args and self.args.adaptive_opt > 0 and 'lr' in self.epi_opt.opt_values:
+                if self.args.adaptive_opt > 0 and 'lr' in self.epi_opt.opt_values:
                     pi = 0
                     for param_group in self.optimizer.param_groups:
                         param_group['lr'] = lrs[pi]

@@ -162,7 +162,7 @@ def main():
 
 
         num_steps = args.num_steps
-        if 'nstep' in agent.epi_opt.opt_values:
+        if agent.args.adaptive_opt>0 and 'nstep' in agent.epi_opt.opt_values:
             num_steps = max(agent.epi_opt.opt_values['nstep']*args.num_steps,1)
             num_steps =int(num_steps)
         
@@ -196,7 +196,7 @@ def main():
 
         gamma = args.gamma
 
-        if 'gamma' in agent.epi_opt.opt_values:
+        if agent.args.adaptive_opt>0 and 'gamma' in agent.epi_opt.opt_values:
             gamma = agent.epi_opt.opt_values['gamma']
 
         if args.gail:
@@ -216,7 +216,7 @@ def main():
                     rollouts.masks[step])
 
         gae_lambda = args.gae_lambda
-        if 'gae' in agent.epi_opt.opt_values:
+        if agent.args.adaptive_opt>0 and 'gae' in agent.epi_opt.opt_values:
             gae_lambda = agent.epi_opt.opt_values['gae']
 
         rollouts.compute_returns(next_value, args.use_gae, gamma,
@@ -242,7 +242,7 @@ def main():
         # total_num_steps = (j + 1) * args.num_processes * args.num_steps
 
         num_processes = args.num_processes
-        if 'np' in agent.epi_opt.opt_values:
+        if agent.args.adaptive_opt>0 and 'np' in agent.epi_opt.opt_values:
             num_processes = args.num_processes * agent.epi_opt.opt_values['np']
             num_processes = max(1, int(num_processes))
         total_num_steps  += num_processes * num_steps
